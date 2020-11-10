@@ -1,41 +1,75 @@
 # Used to cancel execution of pieces of code.
 execute1, execute2, execute3 = False, False, False
 
-# Creates custom generator
-class CustomGenerator():
+def fibonacci_sequence(num):
 
-    current_value = 0
+    # Initialization. Values used only for firs item 0 of the sequence
+    a, b, c = 0, 0, 0
 
-    # -1: Infinite sequence
-    def __init__(self, last=-1):
-        self.last = last
+    # 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597
+    # https://www.mathsisfun.com/numbers/fibonacci-sequence.html
+    # add the first two numbers to get the third number
 
-    def __iter__(self):
-        return self
+    # Used to count each iteration
+    count = 0
 
-    def __next__(self):
+    # Range starts in 0, so num+1 allows to count until the actual value passed as num as parameter
+    for i in range(num + 1):
 
-        # Sequence ends at self.last
-        if self.last > -1:
-            self.current_value += 1
-            if self.current_value > self.last:
-                raise StopIteration
-            return self.current_value
+        # Edge condition. Starts the actual count.
+        if i == 1:
+            a, b, c = 0, 1, 0
 
-        # infinite sequence
-        self.current_value += 1
-        return self.current_value
+        c = a + b
+
+        print(f"[{count}] Previous: {a}, Current: {b}, c[{count}]: {c}\n")
+
+        if count >= 1:
+            b = a
+            a = c
+
+        count += 1
+
+    return c
 
 
-# Finite sequence
-c = CustomGenerator(4)
-print(next(c))
-print(next(c))
-print(next(c))
-print(next(c))
-# print(next(c))  # raises Exception StopIteration. This is the 5th attempt and is out of the generator sequence of 4.
+print(fibonacci_sequence(40))
+
 
 if execute1:
+
+    # Creates custom generator
+    class CustomGenerator():
+
+        current_value = 0
+
+        # -1: Infinite sequence
+        def __init__(self, last=-1):
+            self.last = last
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+
+            # Sequence ends at self.last
+            if self.last > -1:
+                self.current_value += 1
+                if self.current_value > self.last:
+                    raise StopIteration
+                return self.current_value
+
+            # infinite sequence
+            self.current_value += 1
+            return self.current_value
+
+    # Finite sequence
+    c = CustomGenerator(4)
+    print(next(c))
+    print(next(c))
+    print(next(c))
+    print(next(c))
+    # print(next(c))  # raises Exception StopIteration. This is the 5th attempt and is out of the generator sequence of 4.
 
     # Infinite sequence. No number passed as parameter means INFINITE
     for i in CustomGenerator():
