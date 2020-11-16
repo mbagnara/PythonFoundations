@@ -84,6 +84,8 @@ def guessing_game():
         if max_rounds == -1:
             return
 
+    summary = []
+
     for i in range(1, max_rounds + 1):
 
         print(line)
@@ -103,6 +105,7 @@ def guessing_game():
             guesses += 1
 
             if guessed_number == machine_number:
+                summary.append(f"Round {i} of {max_rounds}. Attempt: [{guesses}] Gussed number: {guessed_number}")
                 print("Good job! Guessed the number")
                 break
 
@@ -110,7 +113,25 @@ def guessing_game():
         print(line)
         print("")
 
+    # Display summary of guesses
     print("Guessing Game Has Ended!!")
+
+    '''
+        Don’t check for empty containers or sequences (like [] or '') by comparing the length to zero (if len(somelist) == 0). Use if not somelist and assume that empty values will implicitly evaluate to False.
+
+        (if list) is True means not empty. Empty lists evaluate to false
+    '''
+    if summary:  # non-empty
+        print("")
+        print(line)
+        print("SUMMARY")
+        print(line)
+        for i in summary:
+            print(i)
+        print(line)
+    else:
+        print("")
+        print("No matching guesses were found. Sorry, try again!")
 
 
 guessing_game()
